@@ -4,6 +4,9 @@ class Umple < Formula
   url "https://github.com/umple/umple/archive/refs/tags/v1.30.2.tar.gz"
   sha256 "fc2a880c876fdebc00657e2d4461ad5237bd85bda85742778b2ec49c143c31d4"
   license "MIT"
+  
+  bottle :unneeded
+  
   depends_on "ant" => "with-ivy"
   depends_on "ant-contrib"
   def install
