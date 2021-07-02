@@ -1,30 +1,26 @@
 class Umple < Formula
-  desc "Umple: Model-Oriented Programming - embed models in code and vice versa and generate complete systems"
+  desc "Modeling tool/programming language that enables Model-Oriented Programming"
   homepage "https://www.umple.org"
-  url "https://github.com/umple/umple/archive/refs/tags/v1.30.2.tar.gz"
-  sha256 "fc2a880c876fdebc00657e2d4461ad5237bd85bda85742778b2ec49c143c31d4"
+  url "https://github.com/umple/umple/releases/download/v1.30.2/umple-1.30.2.5248.dba0a5744.jar"
+  version "1.30.2.5248.dba0a5744"
+  sha256 "11523494f9f4f360cce9226ed7f68641aa733fa13d4009f871060f9fe54c6a52"
   license "MIT"
 
-  bottle :unneeded
+  bottle:unneeded
 
-  depends_on "ant" => "with-ivy"
+  depends_on "ant"
   depends_on "ant-contrib"
   def install
-    # Use IO.popen instead of system if user should see progress of install so it doesn't look like it is hanging
-    system "export UMPLEROOT=$(pwd); dev-tools/fbumple"
-    # IO.popen("export UMPLEROOT=$(pwd); dev-tools/fbumple") { |io| while (line = io.gets) do puts line end }
-    system "cd dist; echo '#!/bin/csh -f\njava -jar #{prefix}/libexec/'$(ls umple-*.jar)' $*' > ../umple"
-    bin.install "umple"
-    libexec.install Dir["dist/umple-*.jar"]
+    libexec.install "umple-#{version}.jar"
+    bin.write_jar_script libexec/"umple-#{version}.jar", "umple"
   end
+
   test do
-    cmd =
-    "echo 'class X{ a; }' >test.ump;
-    umple test.ump -c -;
-    ls *java;"
-    `#{cmd}`
-    assert_equal(true, File.file?("X.java"), "Java file was not created at umple compilation")
-    assert_equal(true, File.file?("X.class"), "Java file was not compiled at umple compilation")
+    (testpath/"test.ump").write("class X{ a; }")
+    system "#{bin}/umple", "test.ump", "-c", "-"
+    assert_predicate testpath/"X.java", :exist?
+    assert_predicate testpath/"X.class", :exist?
   end
 end
+
 
