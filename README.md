@@ -1,15 +1,21 @@
-# How to get Umple available from Homebrew, the package manager for Macs.
+# This is the original home of the homebrew formula for Umple
+
+To install it on Mac-OS (or Linux as an alterative to managers like apt) use the `brew install umple` command on those platforms. It will create a command called 'umple' which invokes the umple compiler Java jar.
+
+Umple has openjdk as a dependency, which results in several GB of other files being installed.
+
+# How we made Umple available from Homebrew, the package manager for Macs (and also available on Linux).
 
 ## Prerequisite :
 - Install Homebrew: https://docs.brew.sh/Installation
 
 ## Create a new formula (https://docs.brew.sh/Formula-Cookbook) :
 - A formula is a package definition written in Ruby. 
-- Follow the Formula Cookbook to create a new formula. 
+- We followed the Formula Cookbook to create a new formula. 
   - brew create <URL> → creates template brew formula
   - Formulas are installed at: /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core/Formula
 - Umple formula:
-  - To create the formula you need a URL to a zip or tarball. I decided to use a link to umple's latest JAR file because other applications in homebrew based in Java did the same.
+  - To create the formula one needs a URL to a zip or tarball. I decided to use a link to umple's latest JAR file because other applications in homebrew based in Java did the same.
   - The description needs to be 80 characters or less
   - The Homepage must be a https link
   - The URL is the link to umple's latest JAR file
@@ -63,5 +69,6 @@ How to open a homebrew Pull Request: https://docs.brew.sh/How-To-Open-a-Homebrew
   - If so, run brew reinstall 
   - Link: https://docs.brew.sh/Formula-Cookbook#updating-formulae
 - Submit a new version of an existing formula: brew bump-formula-pr
+  - Submit to update  https://github.com/Homebrew/homebrew-core/blob/master/Formula/umple.rb
   - Use --help
   - brew bump-formula-pr --url <URL> --sha256 <SHA256> --version <version> umple
